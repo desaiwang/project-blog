@@ -12,18 +12,19 @@ export const metadata = {
 };
 
 async function Home() {
-  const blogPosts = await getBlogPostList();
+  // const blogPosts = await getBlogPostList()
   //console.log("blogPosts", blogPosts);
+
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.mainHeading}>Latest Content:</h1>
-      {blogPosts.map((post) => (
+      {blogPosts.map(({ slug, title, abstract, publishedOn }) => (
         <BlogSummaryCard
-          key={post.slug}
-          slug={post.slug}
-          title={post.title}
-          abstract={post.abstract}
-          publishedOn={post.publishedOn}
+          key={slug}
+          slug={slug}
+          title={title}
+          abstract={abstract}
+          publishedOn={publishedOn}
         />
       ))}
     </div>
