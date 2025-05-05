@@ -5,13 +5,19 @@ import BlogHero from "@/components/BlogHero";
 import styles from "./postSlug.module.css";
 import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import { BLOG_TITLE } from "@/constants";
+import CodeSnippet from "@/components/CodeSnippet";
+
+const DivisionGroupsDemo = React.lazy(() =>
+  import("@/components/DivisionGroupsDemo")
+);
 
 export async function generateMetadata({ params }) {
   const { postSlug } = await params;
   const blogPost = await loadBlogPost(postSlug);
 
   return {
-    title: blogPost.frontmatter.title,
+    title: `${blogPost.frontmatter.title} - ${BLOG_TITLE}`,
     description: blogPost.frontmatter.abstract,
   };
 }
@@ -19,16 +25,24 @@ export async function generateMetadata({ params }) {
 async function BlogPost({ params }) {
   const { postSlug } = await params;
 
-  const blogPost = await loadBlogPost(postSlug);
-  console.log("blogPost frontmatter", blogPost.frontmatter);
+  const { frontmatter, content } = await loadBlogPost(postSlug);
+
   return (
     <article className={styles.wrapper}>
       <BlogHero
-        title={blogPost.frontmatter.title}
-        publishedOn={blogPost.frontmatter.publishedOn}
+        title={frontmatter.title}
+        publishedOn={frontmatter.publishedOn}
       />
       <div className={styles.page}>
-        {<MDXRemote source={blogPost.content} />}{" "}
+        {
+          <MDXRemote
+            source={content}
+            components={{
+              pre: CodeSnippet,
+              DivisionGroupsDemo,
+            }}
+          />
+        }
       </div>
     </article>
   );
