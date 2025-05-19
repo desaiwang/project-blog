@@ -3,6 +3,7 @@
 import React from "react";
 import clsx from "clsx";
 import { Play, Pause, RotateCcw } from "react-feather";
+import { motion } from "framer-motion";
 
 import Card from "@/components/Card";
 import VisuallyHidden from "@/components/VisuallyHidden";
@@ -35,7 +36,7 @@ function CircularColorsDemo() {
 
   // TODO: This value should cycle through the colors in the
   // COLORS array:
-  const selectedColor = COLORS[timeElapsed % 3];
+  const selectedColor = COLORS[timeElapsed % COLORS.length];
 
   return (
     <Card as="section" className={styles.wrapper}>
@@ -45,7 +46,13 @@ function CircularColorsDemo() {
 
           return (
             <li className={styles.color} key={index}>
-              {isSelected && <div className={styles.selectedColorOutline} />}
+              {isSelected && (
+                <motion.div
+                  layoutId="color-frame"
+                  className={styles.selectedColorOutline}
+                  transition={{ type: "spring", stiffness: 180, damping: 25 }}
+                />
+              )}
               <div
                 className={clsx(
                   styles.colorBox,
@@ -72,7 +79,7 @@ function CircularColorsDemo() {
             {playing ? <Pause /> : <Play />}
             <VisuallyHidden>Play</VisuallyHidden>
           </button>
-          <button>
+          <button onClick={() => setTimeElapsed(0)}>
             <RotateCcw />
             <VisuallyHidden>Reset</VisuallyHidden>
           </button>
