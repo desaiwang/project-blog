@@ -7,6 +7,7 @@ import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { BLOG_TITLE } from "@/constants";
 import CodeSnippet from "@/components/CodeSnippet";
+import CircularColorsDemo from "@/components/CircularColorsDemo";
 
 const DivisionGroupsDemo = React.lazy(() =>
   import("@/components/DivisionGroupsDemo")
@@ -40,6 +41,7 @@ async function BlogPost({ params }) {
             components={{
               pre: CodeSnippet,
               DivisionGroupsDemo,
+              CircularColorsDemo,
             }}
           />
         }
