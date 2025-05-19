@@ -22,16 +22,18 @@ function CircularColorsDemo() {
   const [playing, setPlaying] = React.useState(false);
 
   React.useEffect(() => {
-    if (playing) {
-      const intervalId = window.setInterval(
-        () => setTimeElapsed((t) => t + 1),
-        1000
-      );
-
-      return () => {
-        window.clearInterval(intervalId);
-      };
+    if (!playing) {
+      return;
     }
+
+    const intervalId = window.setInterval(
+      () => setTimeElapsed((t) => t + 1),
+      1000
+    );
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
   }, [playing]);
 
   // TODO: This value should cycle through the colors in the
