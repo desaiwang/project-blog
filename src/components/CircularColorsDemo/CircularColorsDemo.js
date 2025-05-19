@@ -20,6 +20,7 @@ function CircularColorsDemo() {
   // TODO: This value should increase by 1 every second:
   const [timeElapsed, setTimeElapsed] = React.useState(0);
   const [playing, setPlaying] = React.useState(false);
+  const id = React.useId();
 
   React.useEffect(() => {
     if (!playing) {
@@ -50,7 +51,7 @@ function CircularColorsDemo() {
             <li className={styles.color} key={index}>
               {isSelected && (
                 <motion.div
-                  layoutId="color-frame"
+                  layoutId={`${id}-selected-color-outline`}
                   className={styles.selectedColorOutline}
                   transition={{ type: "spring", stiffness: 180, damping: 25 }}
                 />
@@ -79,7 +80,7 @@ function CircularColorsDemo() {
         <div className={styles.actions}>
           <button onClick={() => setPlaying((playing) => !playing)}>
             {playing ? <Pause /> : <Play />}
-            <VisuallyHidden>Play</VisuallyHidden>
+            <VisuallyHidden>{playing ? "Pause" : "Play"}</VisuallyHidden>
           </button>
           <button onClick={() => setTimeElapsed(0)}>
             <RotateCcw />
